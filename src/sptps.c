@@ -730,8 +730,8 @@ bool sptps_start(sptps_t *s, void *handle, bool initiator, bool datagram, ecdsa_
 // Stop a SPTPS session.
 bool sptps_stop(sptps_t *s) {
 	// Clean up any resources.
-	chacha_poly1305_exit(s->incipher);
-	chacha_poly1305_exit(s->outcipher);
+	if (s->incipher) chacha_poly1305_exit(s->incipher);
+	if (s->outcipher) chacha_poly1305_exit(s->outcipher);
 	ecdh_free(s->ecdh);
 	free(s->inbuf);
 	free(s->mykex);
